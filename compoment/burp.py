@@ -88,9 +88,9 @@ class burp:
 
 if __name__ == '__main__':
     burpC = burp()
-    burp.init_target('127.0.0.1',3306)
-    burp.init_uspw(['admin1'],['admin1'])
-    burp.start_burp()
-    burp.checkstate()
+    burpC.init_target('127.0.0.1',3306)
+    burpC.init_uspw(['admin1'],['admin1'])
+    burpC.start_burp()
+    burpC.checkstate()
 
 
