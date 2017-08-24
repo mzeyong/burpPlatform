@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from multiprocessing.dummy import Pool
 import Queue
 import logging
