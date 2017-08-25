@@ -9,11 +9,9 @@ class mysql_burp(burp.burp):
             return None
         try:
             db = MySQLdb.connect(host=self.target,port=self.port,user=self.now_user,passwd=password)
-            if db:
-                burp = True
-            if burp:
-                self.result_pool[self.target+'_'+str(self.port)] = (self.now_user,password)
-                self.stop_signal = True
+            db.close()
+            self.result_pool[self.target+'_'+str(self.port)] = (self.now_user,password)
+            self.stop_signal = True
         except Exception,e:
             logging.error(e)
 
