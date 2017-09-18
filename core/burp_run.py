@@ -6,6 +6,7 @@ import os
 from lib import easyThread
 from lib import send_control
 
+from config import path
 
 class run_interface:
 
@@ -26,7 +27,13 @@ class run_interface:
 
     def init_component(self,component):
         try:
-            os.path.isdir
+            com = os.listdir(path.COMPONENT)
+            for ele in com:
+                if ele.endswith('burp.py'):
+                    if component in ele:
+                        sid = uuid.uuid1()
+                        tempImp = imp.load_source(component+'_burp',path.COMPONENT+component+'_burp.py')
+                        self.com[sid]=tempImp
         except Exception as error:
             pass
 
