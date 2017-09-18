@@ -5,4 +5,6 @@ import os
 
 SP = '\\\\' if 'NT' in os.name else '/'
 
-COMPONENT = os.getcwd()+SP +'component'+SP
+COMPONENT = os.getcwd()+ SP + 'component' +SP
+
+DATAPATH = os.getcwd()+ SP + 'data' +SP

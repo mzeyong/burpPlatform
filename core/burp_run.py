@@ -3,10 +3,12 @@
 import imp
 import uuid
 import os
+
 from lib import easyThread
 from lib import send_control
 
 from config import path
+from config import burp_control
 
 class run_interface:
 
@@ -15,8 +17,27 @@ class run_interface:
     com = {}
     pwd = []
     usr = []
+    target = {}
+    port = {}
+    n_signal = True
 
-    def start(self):
+    def start(self,component):
+        self.init_name(component)
+        for ele in range(burp_control.BURP_LIVE):
+            sid = self.init_component(component)
+            if sid not in self.com.keys():
+                return False
+        for ele in self.target.keys():
+            while self.n_signal:
+                sid = self.check_slave_status()
+                self.set_target(ele,sid)
+                self.set_port(sid)
+                self.start_slave(sid)
+
+    def load_pwd(self,ppath):
+        pass
+
+    def load_usr(self,upath):
         pass
 
     def init_name(self,name):
@@ -34,17 +55,16 @@ class run_interface:
                         sid = uuid.uuid1()
                         tempImp = imp.load_source(component+'_burp',path.COMPONENT+component+'_burp.py')
                         self.com[sid]=tempImp
+                        return sid
         except Exception as error:
             pass
 
-    def set_target(self,target):
+    def set_target(self,target,sid=None):
         try:
-            free_slave = self.check_slave_status()
-            if free_slave:
-                self.com[free_slave].target = target
-                return True
-            else:
-                return False
+            if not sid :
+                sid = self.check_slave_status()
+                self.com[sid].target = target
+            return True
         except Exception as error:
             pass
 
@@ -57,20 +77,14 @@ class run_interface:
         except:
             return None
 
-    def set_port(self,port):
+    def set_port(self,port,sid=None):
         try:
-            free_slave = self.check_slave_status()
-            if free_slave:
-                self.com[free_slave].port = port
-                return True
-            else:
-                return False
+            if not sid :
+                sid = self.check_slave_status()
+                self.com[sid].port = port
+            return True
         except Exception as error:
             pass
-
-
-    def pd(self):
-        pass
 
     def start_slave(self,sid):
         try:
