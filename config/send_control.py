@@ -1,0 +1,13 @@
+# coding=utf-8
+
+BURP_PER_SEC = 60
+
+BURP = 1.0/BURP_PER_SEC
+
+SAFE_TIME = 5
+
+SCAN_PER_SEC = 300
+
+SCAN = 1.0/SCAN_PER_SEC
+
+SAFE_RULE = None

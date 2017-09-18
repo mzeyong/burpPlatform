@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 import MySQLdb
-import burp
+from compoment import burp
 import logging
 
 class mysql_burp(burp.burp):
