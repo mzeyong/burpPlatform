@@ -14,7 +14,6 @@ class burp:
     user = []
     now_user = ''
     pwd = []
-    quest = Queue.Queue()
     argument = {}
     stop_signal = False
 
@@ -28,6 +27,13 @@ class burp:
 
     def init_argument(self,**kwargs):
         self.argument = kwargs
+
+    def save(self,pwd):
+        try:
+            self.result_pool[self.target+'_'+str(self.port)]= (self.now_user,pwd)
+        except Exception as error:
+            pass
+
 
     def start_burp(self):
         '''
@@ -48,6 +54,9 @@ class burp:
             self.stop_signal = True
         except Exception,e:
             logging.error("thread_error :"+ str(e)+"\n")
+
+    def doneList(self):
+        return
 
     def burp_thread(self,password):
         '''

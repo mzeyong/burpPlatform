@@ -2,8 +2,14 @@
 # Author = k2yk
 
 import time
+from core import burp_run
+from core import scan_run
+
+
 
 class task:
+    b_interface = burp_run.run_interface
+    s_interface = scan_run.run_interface
     load_signal = False
     end_signal = False
     component = []
