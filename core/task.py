@@ -40,7 +40,9 @@ class task:
             self.s_com[ele].target = self.target
 
     def init_burp_com(self,comlist):
-        pass
+        for ele in comlist:
+            self.b_com[ele] = self.b_interface()
+
 
     def init_scan_com(self,comlist):
         pass
