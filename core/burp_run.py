@@ -18,7 +18,6 @@ class run_interface:
     com = {}
     pwd = []
     usr = []
-    process = {}
     target = {}
     port = {}
     com_signal = {}
@@ -26,6 +25,17 @@ class run_interface:
     s_signal = True
     p_signal = False
     task_result = {}
+
+
+    def process(self):
+        try:
+            total = len(self.usr)*len(self.pwd)
+            now = self.all_component_process()
+            total = int(float(now) /total * 100)
+            return total
+        except Exception as error:
+            pass
+
 
     def start(self,component,ppath=None,upath=None):
         self.init_name(component)
@@ -90,6 +100,7 @@ class run_interface:
         except Exception as error:
             pass
 
+
     def set_target(self,target,sid=None):
         try:
             if not sid :
@@ -140,3 +151,4 @@ class run_interface:
     def single_component_process(self,sid):
         if sid in self.com.keys():
             return self.com[sid].count
+
