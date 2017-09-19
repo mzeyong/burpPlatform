@@ -70,8 +70,10 @@ class run_interface:
             for ele in self.com.keys():
                 if self.com[ele].result_pool:
                     for target in self.com[ele].result_pool.keys:
-                        target ,port =target.split('_')
-                        self.task_result[target]
+                        name ,ip ,port =target.split('_')
+                        self.task_result[ip] = {
+                            port:self.com[ele].result_pool[target]
+                        }
         except Exception as error:
             pass
 
@@ -101,6 +103,7 @@ class run_interface:
         try:
             for ele in self.com.keys():
                 if self.com[ele].stop_signal :
+                    self.result()
                     return ele
             return None
         except:
@@ -121,14 +124,19 @@ class run_interface:
                 if self.com[sid].stop_signal:
                     pass
                 else:
-                    send_control.ethread(self.com[sid].burp_thread,self.pwd)
+                    send_control.ethread(self.com[sid].burp_thread,self.pwd,self.com[sid].count)
             else:
                 return None
             return None
         except Exception as error:
             return None
 
-    def component_process(self):
-        temp = {}
+    def all_component_process(self):
+        temp = 0
         for ele in self.com.keys():
-            temp[ele] = self.com[ele]
+            temp += self.com[ele].count
+        return temp
+
+    def single_component_process(self,sid):
+        if sid in self.com.keys():
+            return self.com[sid].count

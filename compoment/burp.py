@@ -16,6 +16,8 @@ class burp:
     pwd = []
     argument = {}
     stop_signal = False
+    count = 0
+    name = 'orgin'
 
     def init_target(self,target,port):
         self.target = target
@@ -30,10 +32,9 @@ class burp:
 
     def save(self,pwd):
         try:
-            self.result_pool[self.target+'_'+str(self.port)]= (self.now_user,pwd)
+            self.result_pool[self.name+self.target+'_'+str(self.port)]= (self.now_user,pwd)
         except Exception as error:
             pass
-
 
     def start_burp(self):
         '''
@@ -55,10 +56,7 @@ class burp:
         except Exception,e:
             logging.error("thread_error :"+ str(e)+"\n")
 
-    def doneList(self):
-        return
-
-    def burp_thread(self,password):
+    def burp_thread(self,password,endSignal=False):
         '''
         开始爆破主体，自动多线程执行，毋需手动多线程，
         :param kwargs:
@@ -85,6 +83,8 @@ class burp:
                 self.stop_signal = True
         except Exception,e:
             logging.error(e)
+        if endSignal:
+            self.stop_signal =True
 
     def checkstate(self):
         while 1:

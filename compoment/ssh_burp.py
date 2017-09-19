@@ -4,7 +4,7 @@ import paramiko
 import burp
 
 class ssh_burp(burp.burp):
-    def burp_thread(self,password):
+    def burp_thread(self,password,endSignal = False):
         if self.stop_signal:
             return None
         try:
@@ -12,10 +12,12 @@ class ssh_burp(burp.burp):
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(self.target,self.port,self.now_user,password)
             ssh.close()
-            self.result_pool[self.target+'_'+str(self.port)] = (self.now_user,password)
+            self.save(password)
             self.stop_signal = True
         except Exception,e:
             logging.error(e)
+        if endSignal:
+            self.stop_signal =True
 
 if __name__ == '__main__':
     burp_test = ssh_burp()
